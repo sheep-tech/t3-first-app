@@ -1,9 +1,10 @@
+import { IPoster } from "../types/Poster";
 
 interface PosterElementProps {
-  movie: string
+  poster: IPoster;
 }
 export const PosterElement = (props: PosterElementProps) => {
   return (
-    <div>{props.movie}</div>
+    <div>{props.poster.rating}</div>
   )
 }

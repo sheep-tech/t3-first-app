@@ -1,6 +1,9 @@
 
 export const NavBar = () => {
   return (
-    <div>NavBar</div>
+    <div
+    style={{height: '10vh'}}
+    
+    >NavBar</div>
   )
 }
