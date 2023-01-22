@@ -1,11 +1,46 @@
 import Head from "next/head";
 import React, { useReducer } from "react";
-import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/css";
-import { Header } from "../../components/poster/Header";
-import { PosterElement } from "../../components/poster/PosterElement";
-import { NavBar } from "../../components/poster/NavBar";
-import PosterReducer from "../../reducer/poster-reducer";
+import { Header } from "../../poster/components/Header";
+import { NavBar } from "../../poster/NavBar";
+import { PosterLayout } from "../../poster/PosterLayout";
+import PosterReducer from "../../poster/components/reducer/poster-reducer";
+
+export interface Person {
+    firstName: string
+    lastName?: string
+    profilePictureUrl?: string
+
+}
+export interface Poster {
+    title: string
+    genre: string[]
+    rating: number
+    trailer: string
+    posterImgUrl: string
+    description: {
+        director: Person
+        cast?: Person[]
+        synopsis: string
+    }
+    // seats: 
+}
+
+const data: Poster[] = [
+    {
+        title: 'Avatar',
+        genre: ['Sci-Fi', 'Action'],
+        rating:4,
+        posterImgUrl: `public/avatar-poster.avif`,
+        trailer: `https://www.youtube.com/watch?v=o5F8MOz_IDw`,
+        description: {
+            director: {
+                firstName: 'James'
+            },
+            synopsis: `Avatar...`
+        }
+    }
+]
 
 export default function Poster() {
   const [state, dispatch] = useReducer(PosterReducer, {
@@ -20,26 +55,7 @@ export default function Poster() {
 
       <Header />
 
-      <Swiper
-        spaceBetween={50}
-        slidesPerView={1}
-        onSlideChange={() => console.log("slide change")}
-        pagination={false}
-        onSwiper={(swiper) => console.log(swiper)}
-      >
-        <SwiperSlide>
-          <PosterElement />
-        </SwiperSlide>
-        <SwiperSlide>
-          <PosterElement />
-        </SwiperSlide>
-        <SwiperSlide>
-          <PosterElement />
-        </SwiperSlide>
-        <SwiperSlide>
-          <PosterElement />
-        </SwiperSlide>
-      </Swiper>
+      <PosterLayout></PosterLayoiut>
 
       <NavBar></NavBar>
     </>
