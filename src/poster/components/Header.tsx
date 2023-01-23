@@ -1,9 +1,11 @@
 import { IPoster } from "../types/Poster";
+
 import {
   MagnifyingGlassIcon,
   BellIcon,
   StarIcon,
 } from "@heroicons/react/24/solid";
+import { Button } from "@mantine/core";
 
 const Chip = ({ name }: { name: string }) => {
   return (
@@ -19,6 +21,9 @@ interface HeaderProps {
   poster: IPoster;
 }
 export const Header = (props: HeaderProps) => {
+  const openTrailer = () => {
+    window.open(props.poster.trailer, '_blank')
+  };
   return (
     <div style={{ height: "20vh" }} className="w-full px-4 pt-16">
       <div className="flex items-start justify-between">
@@ -53,7 +58,15 @@ export const Header = (props: HeaderProps) => {
           </p>
         </span>
 
-
+        <Button
+          onClick={openTrailer}
+          variant="light"
+          color="dark"
+          radius="xl"
+          compact
+        >
+          Watch Trailer
+        </Button>
       </div>
     </div>
   );

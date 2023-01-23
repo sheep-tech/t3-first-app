@@ -8,13 +8,13 @@ interface PosterLayoutProps {
   posters: IPoster[];
 }
 export const PosterLayout = (props: PosterLayoutProps) => {
-const [swiperIndex, setSwiperIndex] = useState(0)
+  const [swiperIndex, setSwiperIndex] = useState(0);
   return (
     <div>
-            <Header poster={props.posters[swiperIndex]!} />
+      <Header poster={props.posters[swiperIndex]!} />
 
       <Swiper
-        style={{height: '70vh'}}
+        style={{ height: "70vh" }}
         spaceBetween={50}
         slidesPerView={1}
         onSlideChange={(swiper) => setSwiperIndex(swiper.activeIndex)}
