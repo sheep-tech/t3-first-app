@@ -6,6 +6,7 @@ import {
   StarIcon,
 } from "@heroicons/react/24/solid";
 import { Button } from "@mantine/core";
+import { motion, Variants } from "framer-motion";
 
 const Chip = ({ name }: { name: string }) => {
   return (
@@ -17,17 +18,38 @@ const Chip = ({ name }: { name: string }) => {
   );
 };
 
+const variants: Variants = {
+  show: {
+    opacity: 1,
+    transition: {
+      ease: "easeInOut",
+      duration: 0.5,
+    },
+  },
+  hide: {
+    opacity: 0,
+  },
+};
 interface HeaderProps {
   poster: IPoster;
 }
+
 export const Header = (props: HeaderProps) => {
   const openTrailer = () => {
-    window.open(props.poster.trailer, '_blank')
+    window.open(props.poster.trailer, "_blank");
   };
   return (
     <div style={{ height: "20vh" }} className="w-full px-4 pt-16">
-      <div className="flex items-start justify-between">
-        <h1 className="text-4xl font-bold">{props.poster.title}</h1>
+      <div className="flex items-center justify-between">
+        <motion.div
+          key={props.poster.title}
+          variants={variants}
+          animate={"show"}
+          initial="hide"
+        >
+          <h1 className="text-4xl font-bold">{props.poster.title}</h1>
+        </motion.div>
+
         <div className="flex">
           <MagnifyingGlassIcon
             strokeWidth={1.5}
@@ -38,9 +60,19 @@ export const Header = (props: HeaderProps) => {
       </div>
 
       {/* chips */}
+
       <div className="flex flex-wrap justify-start">
-        {props.poster.genre.map((item, index) => {
-          return <Chip name={item} key={index} />;
+        {props.poster.genre.map((item) => {
+          return (
+            <motion.div
+              key={item}
+              variants={variants}
+              animate={"show"}
+              initial="hide"
+            >
+              <Chip name={item} />{" "}
+            </motion.div>
+          );
         })}
       </div>
 

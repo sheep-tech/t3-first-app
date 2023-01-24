@@ -5,7 +5,7 @@ interface PosterElementProps {
 }
 export const PosterElement = (props: PosterElementProps) => {
   return (
-    <div>{props.poster.rating}
+    <div>
       <img className="p-4 rounded-[5rem]" src={props.poster.posterImgUrl}  alt="img" />
     </div>
   )
