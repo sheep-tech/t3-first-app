@@ -1,11 +1,11 @@
 export type flowState = "browsing poster" | "reading movie info" | "choosing seat";
 type PosterActionType = "set poster flow state";
 
-interface PosterAction {
+export interface PosterAction {
   type: PosterActionType;
   payload: flowState;
 }
-interface PosterState {
+export interface PosterState {
   state: flowState;
 }
 

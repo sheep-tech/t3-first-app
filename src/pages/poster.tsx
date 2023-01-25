@@ -3,8 +3,13 @@ import React, { useReducer } from "react";
 import "swiper/css";
 import { NavBar } from "../poster/components/NavBar";
 import { PosterLayout } from "../poster/components/PosterLayout";
+import type {
+  PosterAction,
+  PosterState,
+} from "../poster/reducer/poster-reducer";
 import PosterReducer from "../poster/reducer/poster-reducer";
-import { IPoster } from "../poster/types/Poster";
+import type { IPoster } from "../poster/types/Poster";
+import { motion } from "framer-motion";
 
 const data: IPoster[] = [
   {
@@ -35,22 +40,34 @@ const data: IPoster[] = [
   },
 ];
 
+// @ts-ignore
+export const StateContext = React.createContext<{
+  state: PosterState;
+  dispatch: React.Dispatch<PosterAction>;
+}>({});
+
 export default function Poster() {
   const [state, dispatch] = useReducer(PosterReducer, {
     state: "browsing poster",
   });
 
   return (
-    <div className="text-white ">
-      <Head>
-        <title>Movie Posters</title>
-      </Head>
+    <StateContext.Provider value={{ state, dispatch }}>
+      <motion.div
+        key={state.state}
+        animate={{ translateY: "-50vh" }}
+        className="text-white "
+      >
+        <Head>
+          <title>Movie Posters</title>
+        </Head>
 
-      <div>
-        <PosterLayout posters={data} />
-      </div>
+        <div>
+          <PosterLayout posters={data} />
+        </div>
 
-      <NavBar></NavBar>
-    </div>
+        <NavBar></NavBar>
+      </motion.div>
+    </StateContext.Provider>
   );
 }
