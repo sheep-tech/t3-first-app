@@ -51,11 +51,22 @@ export default function Poster() {
     state: "browsing poster",
   });
 
+  const variants = {
+    openMovieInfo: { translateY: "-50vh" },
+    // You can do whatever you want here, if you just want it to stop completely use `rotate: 0`
+    closeMovieInfo: { translateY: "0vh", transition: { duration: 0.5 } },
+  };
+
   return (
     <StateContext.Provider value={{ state, dispatch }}>
       <motion.div
-        key={state.state}
-        animate={{ translateY: "-50vh" }}
+        // key={state.state}
+        variants={variants}
+        animate={
+          state.state === "reading movie info"
+            ? "openMovieInfo"
+            : "closeMovieInfo"
+        }
         className="text-white "
       >
         <Head>
@@ -66,7 +77,7 @@ export default function Poster() {
           <PosterLayout posters={data} />
         </div>
 
-        <NavBar></NavBar>
+        {state.state === "browsing poster" && <NavBar></NavBar>}
       </motion.div>
     </StateContext.Provider>
   );

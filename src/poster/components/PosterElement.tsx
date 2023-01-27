@@ -28,11 +28,11 @@ export const PosterElement = (props: PosterElementProps) => {
   };
   return (
     <div>
-      {context.state.state}
       {/* @next/next/no-img-element */}
+
       <img
         onClick={toggleMovieDescription}
-        className="scale-110 rounded-[5rem] p-4"
+        className=" rounded-[5rem] p-4 "
         src={props.poster.posterImgUrl}
         alt="img"
       />

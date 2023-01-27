@@ -39,7 +39,7 @@ export const Header = (props: HeaderProps) => {
     window.open(props.poster.trailer, "_blank");
   };
   return (
-    <div style={{ height: "20vh" }} className="w-full px-4 pt-16">
+    <div style={{ height: "20vh" }} className="mb-4 w-full px-4 pt-16">
       <div className="flex items-center justify-between">
         <motion.div
           key={props.poster.title}
