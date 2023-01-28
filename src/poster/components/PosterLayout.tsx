@@ -1,7 +1,9 @@
+import { motion } from "framer-motion";
 import { useState } from "react";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { IPoster } from "../types/Poster";
 import { Header } from "./Header";
+import { PosterDescription } from "./PosterDescription";
 import { PosterElement } from "./PosterElement";
 
 interface PosterLayoutProps {
@@ -40,12 +42,17 @@ export const PosterLayout = (props: PosterLayoutProps) => {
         >
           {props.posters.map((item, index) => {
             return (
-              <SwiperSlide key={index}>
-                <PosterElement poster={item} />
-              </SwiperSlide>
+              <>
+                <SwiperSlide key={index}>
+                  <PosterElement poster={item} />
+                </SwiperSlide>
+              </>
             );
           })}
         </Swiper>
+
+        <PosterDescription poster={props.posters[swiperIndex]!} />
+        {/* <motion.div></motion.div> */}
       </div>
     </>
   );

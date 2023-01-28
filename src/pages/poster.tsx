@@ -9,7 +9,9 @@ import type {
 } from "../poster/reducer/poster-reducer";
 import PosterReducer from "../poster/reducer/poster-reducer";
 import type { IPoster } from "../poster/types/Poster";
+import type { Variants } from "framer-motion";
 import { motion } from "framer-motion";
+import { PosterDescription } from "../poster/components/PosterDescription";
 
 const data: IPoster[] = [
   {
@@ -21,8 +23,25 @@ const data: IPoster[] = [
     description: {
       director: {
         firstName: "James",
+        lastName: "Cameron",
+        profilePictureUrl: `https://xsgames.co/randomusers/avatar.php?g=male`,
       },
-      synopsis: `Avatar...`,
+      synopsis: `Jake Sully and Ney'tiri have formed a family and are doing everything to stay together. However, they must leave their home and explore the regions of Pandora. When an ancient threat resurfaces, Jake must fight a difficult war against the humans.
+      `,
+      cast: [
+        {
+          firstName: "Sam",
+          lastName: "Worthington",
+          role: "Jake Sully",
+          profilePictureUrl: `https://xsgames.co/randomusers/avatar.php?g=male`,
+        },
+        {
+          firstName: "Zoe",
+          lastName: "Saldaña",
+          role: "Ney'tiri",
+          profilePictureUrl: `https://xsgames.co/randomusers/avatar.php?g=female`,
+        },
+      ],
     },
   },
   {
@@ -35,7 +54,8 @@ const data: IPoster[] = [
       director: {
         firstName: "James",
       },
-      synopsis: `Avatar...`,
+      synopsis: `Queen Ramonda, Shuri, M'Baku, Okoye and the Dora Milaje fight to protect their nation from intervening world powers in the wake of King T'Challa's death. As the Wakandans strive to embrace their next chapter, the heroes must band together with Nakia and Everett Ross to forge a new path for their beloved kingdom.
+      `,
     },
   },
 ];
@@ -46,16 +66,31 @@ export const StateContext = React.createContext<{
   dispatch: React.Dispatch<PosterAction>;
 }>({});
 
+const variants: Variants = {
+  openMovieInfo: { translateY: "-50vh" },
+  closeMovieInfo: { translateY: "0vh", transition: { duration: 0.5 } },
+
+  showNavBar: {
+    translateY: "0vh",
+    // opacity: 1,
+    transition: { duration: 0.5, ease: "easeInOut" },
+    transitionEnd: {
+      display: "block",
+    },
+  },
+  hideNavBar: {
+    translateY: "60vh",
+    // opacity: 0,
+    transition: { duration: 0.2 },
+    transitionEnd: {
+      display: "none",
+    },
+  },
+};
 export default function Poster() {
   const [state, dispatch] = useReducer(PosterReducer, {
     state: "browsing poster",
   });
-
-  const variants = {
-    openMovieInfo: { translateY: "-50vh" },
-    // You can do whatever you want here, if you just want it to stop completely use `rotate: 0`
-    closeMovieInfo: { translateY: "0vh", transition: { duration: 0.5 } },
-  };
 
   return (
     <StateContext.Provider value={{ state, dispatch }}>
@@ -73,11 +108,16 @@ export default function Poster() {
           <title>Movie Posters</title>
         </Head>
 
-        <div>
-          <PosterLayout posters={data} />
-        </div>
+        <PosterLayout posters={data} />
 
-        {state.state === "browsing poster" && <NavBar></NavBar>}
+        <motion.div
+          variants={variants}
+          animate={
+            state.state === "reading movie info" ? "hideNavBar" : "showNavBar"
+          }
+        >
+          <NavBar></NavBar>
+        </motion.div>
       </motion.div>
     </StateContext.Provider>
   );

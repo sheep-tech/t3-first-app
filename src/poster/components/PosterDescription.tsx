@@ -1,14 +1,14 @@
-import { IPoster } from "../types/Poster";
-
-import {
-  MagnifyingGlassIcon,
-  BellIcon,
-  StarIcon,
-} from "@heroicons/react/24/solid";
-import { Button } from "@mantine/core";
-import { motion, Variants } from "framer-motion";
+import { MagnifyingGlassIcon, BellIcon } from "@heroicons/react/24/solid";
+import { StarIcon, Button, Divider } from "@mantine/core";
+import type { Variants } from "framer-motion";
+import { motion } from "framer-motion";
+import type { IPoster } from "../types/Poster";
+import { People } from "./People";
 import { Chip } from "./Chip";
 
+interface PosterDescriptionProps {
+  poster: IPoster;
+}
 const variants: Variants = {
   show: {
     opacity: 1,
@@ -21,17 +21,14 @@ const variants: Variants = {
     opacity: 0,
   },
 };
-interface HeaderProps {
-  poster: IPoster;
-}
-
-export const Header = (props: HeaderProps) => {
-  const openTrailer = () => {
-    window.open(props.poster.trailer, "_blank");
-  };
+export const PosterDescription = (props: PosterDescriptionProps) => {
   return (
-    <div style={{ height: "20vh" }} className="w-full px-4 pt-16  ">
+    <div className="px-4">
+      ciaos
+      {props.poster.title}
+      {/* <div>{props.poster.description}</div> */}
       <div className="flex items-center justify-between">
+        {/* title */}
         <motion.div
           key={props.poster.title}
           variants={variants}
@@ -40,18 +37,8 @@ export const Header = (props: HeaderProps) => {
         >
           <h1 className="text-4xl font-bold">{props.poster.title}</h1>
         </motion.div>
-
-        <div className="flex">
-          <MagnifyingGlassIcon
-            strokeWidth={1.5}
-            className="mr-4 h-6 w-6"
-          ></MagnifyingGlassIcon>
-          <BellIcon className="h-6 w-6"></BellIcon>
-        </div>
       </div>
-
       {/* chips */}
-
       <div className="flex flex-wrap justify-start">
         {props.poster.genre.map((item) => {
           return (
@@ -66,7 +53,6 @@ export const Header = (props: HeaderProps) => {
           );
         })}
       </div>
-
       <div className="my-2 flex flex-wrap justify-between">
         {/* rating */}
         <span className="flex items-center text-sm">
@@ -80,17 +66,16 @@ export const Header = (props: HeaderProps) => {
             {` 58k votes`}
           </p>
         </span>
-
-        <Button
-          onClick={openTrailer}
-          variant="light"
-          color="dark"
-          radius="xl"
-          compact
-        >
-          Watch Trailer
-        </Button>
       </div>
+      <Divider className="my-8" size="sm" />
+      <h3 className="text-base font-bold">About the movie</h3>
+      <div className="mb-6">
+        <p className="text-sm">{props.poster.description.synopsis}</p>
+      </div>
+      {props.poster.description.cast && (
+        <People people={props.poster.description.cast} header={"Cast"} />
+      )}
+      <People people={[props.poster.description.director]} header={"Crew"} />
     </div>
   );
 };
