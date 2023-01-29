@@ -1,14 +1,14 @@
-import { PlayCircleIcon } from "@heroicons/react/24/solid";
+import { FilmIcon, TicketIcon, UserIcon } from "@heroicons/react/24/outline";
 
 export const NavBar = () => {
   return (
     <div
-      className="mx-auto flex w-11/12 justify-between rounded-t-[4rem] bg-[#403b59] py-8 px-10"
-      style={{ height: "10vh" }}
+      className="mx-auto mt-4 flex w-11/12 justify-between rounded-t-[4rem] bg-[#403b59] py-6 px-12"
+      style={{ height: "calc(10vh - 1em)" }}
     >
-      <PlayCircleIcon className="mr-4 h-8 w-8" />
-      <PlayCircleIcon className="mr-4 h-8 w-8" />
-      <PlayCircleIcon className="mr-4 h-8 w-8" />
+      <FilmIcon className=" h-6 w-6" />
+      <TicketIcon className=" h-6 w-6" />
+      <UserIcon className=" h-6 w-6" />
     </div>
   );
 };

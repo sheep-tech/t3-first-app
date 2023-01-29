@@ -1,10 +1,20 @@
 import { StateContext } from "../../pages/poster";
 import { IPoster } from "../types/Poster";
 import { useContext, useState } from "react";
+import { motion, Variants } from "framer-motion";
 
 interface PosterElementProps {
   poster: IPoster;
 }
+const variants: Variants = {
+  zoom: {
+    transform: "scale(1.1)",
+    // transitionEnd: {
+    //   "--tw-translate-y": "28vh",
+    // },
+  },
+  reset: { transform: "scale(1)" },
+};
 export const PosterElement = (props: PosterElementProps) => {
   const context = useContext(StateContext);
 
@@ -27,15 +37,21 @@ export const PosterElement = (props: PosterElementProps) => {
     });
   };
   return (
-    <div>
-      {/* @next/next/no-img-element */}
-
-      <img
-        onClick={toggleMovieDescription}
-        className=" rounded-[5rem] p-4 "
-        src={props.poster.posterImgUrl}
-        alt="img"
-      />
-    </div>
+    <motion.div
+      variants={variants}
+      animate={openMovieDescription ? "zoom" : "reset"}
+      className="my-4 overflow-hidden rounded-[5rem] px-4"
+    >
+      <div className="rounded-[5rem]">
+        {/* @next/next/no-img-element */}
+        <img
+          style={{ height: "70vh" }}
+          onClick={toggleMovieDescription}
+          className="h-full scale-100 rounded-[5rem] object-cover object-top"
+          src={props.poster.posterImgUrl}
+          alt="img"
+        />
+      </div>
+    </motion.div>
   );
 };

@@ -5,6 +5,10 @@ import { motion } from "framer-motion";
 import type { IPoster } from "../types/Poster";
 import { People } from "./People";
 import { Chip } from "./Chip";
+import { Review } from "./Review";
+import { RecommendedMovies } from "./RecommendedMovies";
+import { useContext } from "react";
+import { StateContext } from "../../pages/poster";
 
 interface PosterDescriptionProps {
   poster: IPoster;
@@ -22,11 +26,14 @@ const variants: Variants = {
   },
 };
 export const PosterDescription = (props: PosterDescriptionProps) => {
+  const { dispatch } = useContext(StateContext);
+
+  const chooseSeats = () => {
+    dispatch({ type: "set poster flow state", payload: "choosing seat" });
+  };
+
   return (
-    <div className="px-4">
-      ciaos
-      {props.poster.title}
-      {/* <div>{props.poster.description}</div> */}
+    <div className="relative px-4">
       <div className="flex items-center justify-between">
         {/* title */}
         <motion.div
@@ -76,6 +83,31 @@ export const PosterDescription = (props: PosterDescriptionProps) => {
         <People people={props.poster.description.cast} header={"Cast"} />
       )}
       <People people={[props.poster.description.director]} header={"Crew"} />
+      <Divider className="my-8" size="sm" />
+      {props.poster.reviews && (
+        <>
+          <Review reviews={props.poster.reviews} />
+          <Divider className="my-10 " size="sm" />
+        </>
+      )}
+
+      <div className="mb-6">
+        {props.poster.recommendedMovies && (
+          <RecommendedMovies movies={props.poster.recommendedMovies} />
+        )}
+      </div>
+
+      <div className="sticky bottom-[-47vh] z-10 mx-auto w-fit">
+        <Button
+          onClick={chooseSeats}
+          size="lg"
+          variant="filled"
+          className=" bg-[#ecc300] px-16 font-normal text-black hover:bg-[#ecc300]"
+          radius="md"
+        >
+          Select seats
+        </Button>
+      </div>
     </div>
   );
 };
