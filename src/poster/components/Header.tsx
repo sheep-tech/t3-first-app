@@ -7,16 +7,8 @@ import {
 } from "@heroicons/react/24/solid";
 import { Button } from "@mantine/core";
 import { motion, Variants } from "framer-motion";
-
-const Chip = ({ name }: { name: string }) => {
-  return (
-    <div className="my-2 mt-1">
-      <div className="mr-2 flex items-center justify-center rounded-full border border-white py-1 px-2 font-semibold ">
-        <div className="max-w-full flex-initial text-xs ">{name}</div>
-      </div>
-    </div>
-  );
-};
+import { Chip } from "./Chip";
+import { PlayCircleIcon, PlayIcon } from "@heroicons/react/24/outline";
 
 const variants: Variants = {
   show: {
@@ -39,7 +31,7 @@ export const Header = (props: HeaderProps) => {
     window.open(props.poster.trailer, "_blank");
   };
   return (
-    <div style={{ height: "20vh" }} className="w-full px-4 pt-16">
+    <div style={{ height: "20vh" }} className="w-full px-4 pt-16  ">
       <div className="flex items-center justify-between">
         <motion.div
           key={props.poster.title}
@@ -47,7 +39,9 @@ export const Header = (props: HeaderProps) => {
           animate={"show"}
           initial="hide"
         >
-          <h1 className="text-4xl font-bold">{props.poster.title}</h1>
+          <h1 className="max-w-[18rem] truncate text-4xl font-bold">
+            {props.poster.title}
+          </h1>
         </motion.div>
 
         <div className="flex">
@@ -90,13 +84,8 @@ export const Header = (props: HeaderProps) => {
           </p>
         </span>
 
-        <Button
-          onClick={openTrailer}
-          variant="light"
-          color="dark"
-          radius="xl"
-          compact
-        >
+        <Button onClick={openTrailer} variant="filled" radius="xl" compact>
+          <PlayCircleIcon className="mr-1 h-6 w-6"></PlayCircleIcon>
           Watch Trailer
         </Button>
       </div>
